@@ -1,12 +1,5 @@
 package main
 
-func transacao(comprador int, vendedor int, acao int) {
-	saldo[comprador] -= valores[acao]
-	saldo[vendedor] += valores[acao]
-	relacao[comprador][acao]++
-	relacao[vendedor][acao]--
-}
-
 func CompraSeq(comprador int, acao int) bool {
 
 	vendedor := -1

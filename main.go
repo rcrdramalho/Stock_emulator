@@ -6,10 +6,11 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"sync"
 )
 
-const N = 1000
-const qnt = 10000
+const N = 100
+const qnt = 100000
 
 // foi
 var falhas = 0
@@ -21,6 +22,7 @@ var (
 	vendas  [][]int
 	relacao [][]int
 	err     error
+	mu sync.Mutex
 )
 
 // Função que lê um arquivo e converte o conteúdo em um vetor de inteiros
@@ -221,9 +223,20 @@ func atribuiVetores() {
 	}
 }
 
+func transacao(comprador int, vendedor int, acao int) {
+	mu.Lock()
+    defer mu.Unlock()
+	saldo[comprador] -= valores[acao]
+	saldo[vendedor] += valores[acao]
+	relacao[comprador][acao]++
+	relacao[vendedor][acao]--
+}
+
 func main() {
 	gera()
 	atribuiVetores()
-	sequencial()
-	fmt.Println(float32(falhas) / float32(qnt))
+	fmt.Println("Saldo antes: ", somaVetor(saldo))
+	concorrente()
+	fmt.Println("Saldo depois: ", somaVetor(saldo))
+	fmt.Println("Falhas: ", float32(falhas) / float32(qnt))
 }
