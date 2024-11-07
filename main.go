@@ -9,7 +9,7 @@ import (
 )
 
 const N = 1000
-const qnt = 100000
+const qnt = 10000
 
 var falhas = 0
 
