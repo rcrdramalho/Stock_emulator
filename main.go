@@ -11,6 +11,7 @@ import (
 const N = 1000
 const qnt = 10000
 
+// foi
 var falhas = 0
 
 var (
