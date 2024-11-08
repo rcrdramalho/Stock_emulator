@@ -1,23 +1,21 @@
 package main
 
 import (
-	"fmt"
 	"math/rand"
-	"os"
 )
 
-func GeraSaldos() []int {
-	listaSaldos := make([]int, N)
+func GeraSaldos() []float32 {
+	listaSaldos := make([]float32, N)
 	for i := 0; i < N; i++ {
-		listaSaldos[i] = rand.Intn(100000) // Valores aleatórios de 0 a 99 (ajuste conforme necessário)
+		listaSaldos[i] = float32(rand.Intn(10000)) // Valores aleatórios de 0 a 99 (ajuste conforme necessário)
 	}
 	return listaSaldos
 }
 
-func GeraValores() []int {
-	listaValores := make([]int, N)
+func GeraValores() []float32 {
+	listaValores := make([]float32, N)
 	for i := 0; i < N; i++ {
-		listaValores[i] = rand.Intn(200)
+		listaValores[i] = float32(rand.Intn(20))
 	}
 	return listaValores
 }
@@ -44,6 +42,7 @@ func GeraTransacoes() [][]int {
 	return transacoes
 }
 
+/*
 func VetorArquivo(filename string, array []int) error {
 	file, err := os.Create(filename)
 	if err != nil {
@@ -122,3 +121,4 @@ func gera() {
 		fmt.Println("Vendas salvas com sucesso em vendas.txt")
 	}
 }
+*/
