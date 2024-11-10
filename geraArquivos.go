@@ -4,18 +4,18 @@ import (
 	"math/rand"
 )
 
-func GeraSaldos() []float32 {
-	listaSaldos := make([]float32, N)
+func GeraSaldos() []float64 {
+	listaSaldos := make([]float64, N)
 	for i := 0; i < N; i++ {
-		listaSaldos[i] = float32(rand.Intn(10000)) // Valores aleatórios de 0 a 99 (ajuste conforme necessário)
+		listaSaldos[i] = float64(rand.Intn(saldoMax)) // Valores aleatórios de 0 a 99 (ajuste conforme necessário)
 	}
 	return listaSaldos
 }
 
-func GeraValores() []float32 {
-	listaValores := make([]float32, N)
+func GeraValores() []float64 {
+	listaValores := make([]float64, N)
 	for i := 0; i < N; i++ {
-		listaValores[i] = float32(rand.Intn(20))
+		listaValores[i] = float64(rand.Intn(precoMax))
 	}
 	return listaValores
 }
@@ -41,84 +41,3 @@ func GeraTransacoes() [][]int {
 	}
 	return transacoes
 }
-
-/*
-func VetorArquivo(filename string, array []int) error {
-	file, err := os.Create(filename)
-	if err != nil {
-		return err
-	}
-	defer file.Close()
-
-	for _, value := range array {
-		_, err := fmt.Fprintf(file, "%d ", value)
-		if err != nil {
-			return err
-		}
-	}
-	return nil
-}
-
-func MatrizArquivo(filename string, matrix [][]int) error {
-	file, err := os.Create(filename)
-	if err != nil {
-		return err
-	}
-	defer file.Close()
-
-	for _, row := range matrix {
-		for j, value := range row {
-			if j == len(row)-1 {
-				fmt.Fprintf(file, "%d", value)
-			} else {
-				fmt.Fprintf(file, "%d ", value)
-			}
-		}
-		fmt.Fprintln(file) // Pula para a próxima linha
-	}
-	return nil
-}
-
-func gera() {
-	listaSaldos := GeraSaldos()
-	listaValores := GeraValores()
-	relacao1 := GeraRelacoes()
-	compras1 := GeraTransacoes()
-	vendas1 := GeraTransacoes()
-
-	err = VetorArquivo("saldos.txt", listaSaldos)
-	if err != nil {
-		fmt.Println("Erro ao salvar o arquivo:", err)
-	} else {
-		fmt.Println("Saldos salvos com sucesso em saldos.txt")
-	}
-
-	err = VetorArquivo("valores.txt", listaValores)
-	if err != nil {
-		fmt.Println("Erro ao salvar o arquivo:", err)
-	} else {
-		fmt.Println("Valores salvos com sucesso em saldos.txt")
-	}
-
-	err = MatrizArquivo("relacao.txt", relacao1)
-	if err != nil {
-		fmt.Println("Erro ao salvar o arquivo:", err)
-	} else {
-		fmt.Println("Relação salva com sucesso em relacoes.txt")
-	}
-
-	err = MatrizArquivo("compras.txt", compras1)
-	if err != nil {
-		fmt.Println("Erro ao salvar o arquivo:", err)
-	} else {
-		fmt.Println("Compras salvas com sucesso em compras.txt")
-	}
-
-	err = MatrizArquivo("vendas.txt", vendas1)
-	if err != nil {
-		fmt.Println("Erro ao salvar o arquivo:", err)
-	} else {
-		fmt.Println("Vendas salvas com sucesso em vendas.txt")
-	}
-}
-*/

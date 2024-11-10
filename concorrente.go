@@ -12,9 +12,6 @@ func CompraConc(indice int, ch_compras chan int, ch_vendas chan int) {
 	comprador := compras[indice][0]
 	acao := vendas[indice][1]
 	ch_compras <- comprador
-	mu2.Lock()
-	transacoes++
-	mu2.Unlock()
 
 	select {
 	case vendedor := <-ch_vendas:
@@ -23,7 +20,7 @@ func CompraConc(indice int, ch_compras chan int, ch_vendas chan int) {
 			falhas++
 		} else {
 			transacao(comprador, vendedor, acao)
-			valores[acao] *= 1.1
+			valores[acao] *= multAcao
 		}
 	case <-time.After(3 * time.Second): // Timeout de 2 segundos
 		// Código para o caso de timeout, caso não haja resposta de ch_vendas
@@ -36,9 +33,6 @@ func VendaConc(indice int, ch_compras chan int, ch_vendas chan int) {
 	vendedor := vendas[indice][0]
 	acao := vendas[indice][1]
 	ch_vendas <- vendedor
-	mu2.Lock()
-	transacoes++
-	mu2.Unlock()
 
 	select {
 	case comprador := <-ch_compras:
@@ -47,7 +41,7 @@ func VendaConc(indice int, ch_compras chan int, ch_vendas chan int) {
 			falhas++
 		} else {
 			transacao(comprador, vendedor, acao)
-			valores[acao] /= 1.1
+			valores[acao] /= multAcao
 		}
 	case <-time.After(3 * time.Second): // Timeout de 2 segundos
 		// Código para o caso de timeout, caso não haja resposta de ch_compras
@@ -56,6 +50,7 @@ func VendaConc(indice int, ch_compras chan int, ch_vendas chan int) {
 }
 
 func concorrente() {
+	falhas = 0
 	canais_compra := make([]chan int, N)
 	canais_venda := make([]chan int, N)
 	for i := 0; i < N; i++ {

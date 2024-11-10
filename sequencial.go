@@ -19,7 +19,7 @@ func CompraSeq(comprador int, acao int) bool {
 	transacao(comprador, vendedor, acao)
 	vendas[id][0] = -1
 	vendas[id][1] = -1
-	valores[acao] *= 1
+	valores[acao] *= multAcao
 
 	return true
 }
@@ -36,11 +36,12 @@ func VendaSeq(vendedor int, acao int) bool {
 		}
 	}
 	if (comprador == -1) || (relacao[comprador][acao] == 0) || (saldo[comprador] < valores[acao]) {
+		falhas++
 		return false
 	}
 
 	transacao(comprador, vendedor, acao)
-	valores[acao] /= 1
+	valores[acao] /= multAcao
 	compras[id][0] = -1
 	compras[id][1] = -1
 
@@ -48,7 +49,7 @@ func VendaSeq(vendedor int, acao int) bool {
 }
 
 func sequencial() {
-
+	falhas = 0
 	for i := 0; i < qnt; i++ {
 		if compras[i][0] != -1 {
 			if CompraSeq(compras[i][0], compras[i][1]) {
